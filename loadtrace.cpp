@@ -67,7 +67,7 @@ void processExclusions(QDir dir)
 static QVector<qreal> makeBlackmanWindow(void)
 {
     QVector<qreal> res;
-    int M = 50;
+    int M = 22;
 
     for (int i = 1; i < M; i ++)   // 1 .. (M-1).  Outside that, is zero
     {
@@ -82,7 +82,7 @@ static QVector<qreal> makeBlackmanWindow(void)
 static qreal BlackmanWindowSum(void)
 {
     // The sum of the window shape above
-    return 21.0000;
+    return 9.2400;
 }
 
 // Change a 3-dimensional trace to a 1-dimensional one
@@ -139,7 +139,8 @@ void addWindowedMax(void)
             if (latestBase >= 0 && !isExcluded)
             {
                 t_Trace &newT = Traces[latestBase];
-                newT.wMax = 16384.0f*static_cast<float>(latestTot / BlackmanWindowSum());
+                newT.wMax = 16384.0f*static_cast<float>(1.414213562 * latestTot / BlackmanWindowSum());  // Scale by 16384 to change it back into measurement units.
+                                                                                            // Scale by SQRT(2) to account for RMS.
             }
 
             latestBase = i;
@@ -184,7 +185,8 @@ void addWindowedMax(void)
     if (latestBase >= 0 && !isExcluded)
     {
         t_Trace &newT = Traces[latestBase];
-        newT.wMax = 16384.0f*static_cast<float>(latestTot / BlackmanWindowSum());
+        newT.wMax = 16384.0f*static_cast<float>(1.414213562 * latestTot / BlackmanWindowSum());  // Scale by 16384 to change it back into measurement units.
+                                                                                                 // Scale by SQRT(2) to account for RMS.
     }
 
 }

@@ -123,7 +123,8 @@ void MyModel::setTree(QTreeWidget * treeWidgetTopLevel)
             qreal x = static_cast<qreal>(theTraces->at(i).wMax);
             if (x > 0.)
             {
-                leaf->setText(4, QString::number(20.*qLn(x/16384./1.E-6)/qLn(10.), 'f', 1));  // units of dB ug
+                //leaf->setText(4, QString::number(20.*qLn(x/16384./1.E-6)/qLn(10.), 'f', 1));  // units of dB ug (Sometimes required)
+                leaf->setText(4, QString::number(x, 'f', 3));  // same units as max/rms above
             }
             else
             {
