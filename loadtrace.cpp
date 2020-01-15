@@ -364,9 +364,9 @@ t_Traces * loadtrace(QDir fDir, QList<QFileInfo> fFiles)
             if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
                 std::vector<std::array<float, 3>> xyz;
 
-                float v_bat, temp_1, temp_2;
+                float v_bat, temp_1, temp_2, temp_3;
 
-                v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0;
+                v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0; temp_3 = -1.0;
                 xyz.clear();
 
                 QTextStream in(&file);
@@ -412,7 +412,7 @@ t_Traces * loadtrace(QDir fDir, QList<QFileInfo> fFiles)
                             xyz.clear();
                             AddNewTrace(Trace);
                             traces_in_file ++;
-                            v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0;
+                            v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0; temp_3 = -1.0;
                         }
 
                         int pos;
@@ -434,6 +434,12 @@ t_Traces * loadtrace(QDir fDir, QList<QFileInfo> fFiles)
                             QStringRef subString(&line, pos+5, line.length()-pos-5);
                             temp_2 = subString.split(" ")[0].toFloat();
                         }
+                        pos = line.indexOf("Text=");
+                        if (pos >= 0)
+                        {
+                            QStringRef subString(&line, pos+5, line.length()-pos-5);
+                            temp_3 = subString.split(" ")[0].toFloat();
+                        }
 
                         if (line[2] == '/')
                         {
@@ -449,8 +455,9 @@ t_Traces * loadtrace(QDir fDir, QList<QFileInfo> fFiles)
                            extra.v_bat = v_bat;
                            extra.temp_1 = temp_1;
                            extra.temp_2 = temp_2;
+                           extra.temp_3 = temp_3;
                            extra.fileName = fInfo.fileName();
-                           v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0;
+                           v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0; temp_3 = -1.0;
                            Extras.push_back(extra);
 
                         }
@@ -462,8 +469,9 @@ t_Traces * loadtrace(QDir fDir, QList<QFileInfo> fFiles)
                             extra.v_bat = v_bat;
                             extra.temp_1 = temp_1;
                             extra.temp_2 = temp_2;
+                            extra.temp_3 = temp_3;
                             extra.fileName = fInfo.fileName();
-                            v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0;
+                            v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0; temp_3 = -1.0;
                             Extras.push_back(extra);
                         }
                         else
@@ -485,7 +493,7 @@ t_Traces * loadtrace(QDir fDir, QList<QFileInfo> fFiles)
                     xyz.clear();
                     AddNewTrace(Trace);
                     traces_in_file ++;
-                    v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0;
+                    v_bat = -1.0; temp_1 = -1.0; temp_2 = -1.0; temp_3 = -1.0;
                 }
 
                 file.close();

@@ -256,7 +256,7 @@ void MyModel::save(void)
             }
 
             // Now output heartbeat information
-            out << "File name,Date/time,Type,V_bat [V],Temp 1 [degC],Temp2 [degC]" << "\n";
+            out << "File name,Date/time,Type,V_bat [V],Temp 1 [degC],Temp2 [degC],Temp3 [degC]" << "\n";
             i = 0;
             while (true)
             {
@@ -285,7 +285,12 @@ void MyModel::save(void)
                     out << "," << QString::number(static_cast<qreal>(p_x->v_bat))
                         << "," << QString::number(static_cast<qreal>(p_x->temp_1))
                         << "," << QString::number(static_cast<qreal>(p_x->temp_2))
-                        << "\n";
+                        << ",";
+                    if (p_x->temp_3 != -1.0)  // comparison with float -- not good!
+                    {
+                        out << "," << QString::number(static_cast<qreal>(p_x->temp_3));
+                    }
+                    out << "\n";
                 }
                 i ++;
             }

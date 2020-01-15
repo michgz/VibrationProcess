@@ -45,6 +45,7 @@ public:
     float v_bat;    // V
     float temp_1;   // deg C
     float temp_2;   // deg C
+    float temp_3;   // deg C
 };
 
 class t_VDV
